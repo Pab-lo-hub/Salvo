@@ -1,0 +1,37 @@
+table, th, td {
+    border: 1px solid rgb(81, 90, 170);
+    border-collapse: collapse;
+    background-color: rgb(15, 15, 126);
+    color: white;
+}
+
+table {
+    float: left;
+    margin: 5px;
+}
+
+th, td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+td:hover, th:hover { 
+    background:#af0000; color:#000; 
+}
+
+.barco {
+    background-color: rgb(32, 28, 28);
+}
+
+.shot {
+    background-color: rgb(236, 0, 0);
+}
+
+.hitonaship{
+    background-color: rgb(78, 5, 78);
+}
+
+.sunkenship {
+    background-color: rgb(255, 0, 0);
+}

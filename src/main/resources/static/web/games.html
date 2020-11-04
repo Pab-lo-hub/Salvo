@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <title>Salvo</title>
+</head>
+
+<body>
+    <h1>Salvo!!!</h1>
+    <div id="app">
+        <ol class="container">
+            <li v-for="(game, index) in games">
+                {{game.date | capitalize}} - {{game.gamePlayers[0].player.name}} -
+                {{game.gamePlayers[1] != null ? game.gamePlayers[1].player.name : ""}}
+            </li>
+        </ol>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Total</td>
+                    <td>Won</td>
+                    <td>Lost</td>
+                    <td>Tied</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="score in leaderboard">
+                    <td> {{ score.names }} </td>
+                    <td> {{ score.total }} </td>
+                    <td> {{ score.won }} </td>
+                    <td> {{ score.lost }} </td>
+                    <td> {{ score.tie }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
+    <script src="js/games.js"></script>
+</body>
+
+</html>

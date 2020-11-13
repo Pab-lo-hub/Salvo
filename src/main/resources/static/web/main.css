@@ -35,3 +35,7 @@ td:hover, th:hover {
 .sunkenship {
     background-color: rgb(255, 0, 0);
 }
+
+.btn {
+    margin: 2px;
+}

@@ -3,8 +3,39 @@ var app = new Vue({
   data: {
     games: {},
     leaderboard: [],
+    username: "",
+    password: "",
+    player: "",
   },
   methods: {
+    login: function () {
+      if (app.username.length != 0 && app.password.length != 0) {
+        $.post("/api/login", {
+          username: app.username,
+          password: app.password
+        }).done(function () {
+          location.reload()
+          alert("successful login");
+        })
+      } else {
+        alert("Review your entries and try again")
+      }
+    },
+    logout: function () {
+      $.post("/api/logout").done(function () {
+        location.reload()
+        alert("successful log out");
+      })
+    },
+    register: function () {
+      $.post("/api/players", {
+        username: app.username,
+        password: app.password
+      }).done(function () {
+        location.reload()
+        alert("You are registered. You can log in");
+      })
+    },
     getNames: function () {
       var names = [];
       for (var i = 0; i < app.games.length; i++) {
@@ -102,7 +133,8 @@ fetch("http://localhost:8080/api/games", {
     };
   })
   .then(function (json) {
-    app.games = json
+    app.games = json.games;
+    app.player = json.player;
     app.leaderboard = app.getLeaderboard()
     console.log(json);
   }).catch(function (error) {

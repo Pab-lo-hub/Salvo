@@ -11,30 +11,49 @@ var app = new Vue({
     login: function () {
       if (app.username.length != 0 && app.password.length != 0) {
         $.post("/api/login", {
-          username: app.username,
-          password: app.password
-        }).done(function () {
-          location.reload()
-          alert("successful login");
-        })
+            username: app.username,
+            password: app.password
+          }).done(function () {
+            alert("successful login")
+            location.reload();
+          })
+          .catch(function (error) {
+            if (error.status == 401)
+              alert("usurio o clave invalidos")
+            else
+              alert("Ocurrio un error, contacte al administrador")
+          })
+          .catch(function (error) {
+            alert(error.responseText)
+          })
       } else {
         alert("Review your entries and try again")
       }
     },
     logout: function () {
       $.post("/api/logout").done(function () {
-        location.reload()
         alert("successful log out");
+        location.reload()
       })
     },
     register: function () {
+      if (app.username.length != 0 && app.password.length != 0) {
       $.post("/api/players", {
-        username: app.username,
-        password: app.password
-      }).done(function () {
-        location.reload()
-        alert("You are registered. You can log in");
-      })
+          username: app.username,
+          password: app.password
+        }).done(function () {
+          app.login()
+        })
+        .catch(function (error) {
+          if (error.status == 401)
+            alert("usurio o clave invalidos")
+          else
+            alert("Ocurrio un error, contacte al administrador")
+        })
+        .catch(function (error) {
+          alert(error.responseText)
+        })
+      }
     },
     getNames: function () {
       var names = [];

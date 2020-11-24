@@ -25,6 +25,8 @@
                 <button type="button" v-on:click="login" class="btn btn-primary mb-2">Login</button>
                 <button type="button" v-on:click="register" class="btn btn-primary mb-2">Register</button>
             </form>
+            <button v-show="player != null" id="createGame" type="button" class="btn btn-primary" v-on:click="createGame">Create a Game!</button>
+        
             <div v-if="player != null">
                <span> {{player.name}} </span><button class="btn btn-info" v-on:click="logout">Log out</button>
             </div>
@@ -35,8 +37,21 @@
                 <div class="col-6">
                     <ol class="container">
                         <li v-for="(game, index) in games">
-                            {{game.date | capitalize}} - {{game.gamePlayers[0].player.name}} -
-                            {{game.gamePlayers[1] != null ? game.gamePlayers[1].player.name : ""}}
+                            {{game.date | capitalize}} 
+                            <template v-if="player != null && game.gamePlayers[0].player.id == player.id">
+                                <a v-bind:href="'http://localhost:8080/web/game.html?gp='+game.gamePlayers[0].id"> {{game.gamePlayers[0] != null ? game.gamePlayers[0].player.name : ""}} </a> {{game.gamePlayers[1] != null ? game.gamePlayers[1].player.name : ""}}
+                            
+                            </template>
+                            <template v-else-if="player != null && game.gamePlayers[1] != null && game.gamePlayers[1].player.id == player.id"> 
+                                <a v-bind:href="'http://localhost:8080/web/game.html?gp='+game.gamePlayers[1].id"> {{game.gamePlayers[1] != null ? game.gamePlayers[1].player.name : ""}} </a> {{game.gamePlayers[0] != null ? game.gamePlayers[0].player.name : ""}}  
+                            </template>
+                            <template v-else-if="game.gamePlayers.length == 1 && player != null && player.id != game.gamePlayers[0].player.id">
+                                {{game.gamePlayers[0] != null ? game.gamePlayers[0].player.name : ""}} <button  id="joinGame" class="btn btn-primary" v-on:click="joinGame(game.id)">Join a Game!</button>
+                            </template>
+                            <template v-else>
+                              {{game.gamePlayers[0] != null ? game.gamePlayers[0].player.name : ""}} </a> {{game.gamePlayers[1] != null ? game.gamePlayers[1].player.name : ""}} 
+                            </template>
+                            
                         </li>
                     </ol>
                 </div>

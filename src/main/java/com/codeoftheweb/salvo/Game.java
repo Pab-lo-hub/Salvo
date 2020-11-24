@@ -29,13 +29,20 @@ public class Game {
         this.date = date;
     }
 
-
     public long getId() {
         return id;
     }
 
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
     }
 
     public Set<GamePlayer> getGamePlayers() {
@@ -60,5 +67,4 @@ public class Game {
                 .collect(toList()));
         return dto;
     }
-
 }

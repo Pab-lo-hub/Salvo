@@ -36,6 +36,16 @@ var app = new Vue({
         location.reload()
       })
     },
+    createGame: function (){
+      $.post("/api/games").done(function (response) {
+        location.href = "/web/game.html?gp="+ response.gpid;
+    })
+  },
+    joinGame: function (gameId){
+    $.post('/api/games/' + gameId + '/players').done(function (response) {
+      location.href = "/web/game.html?gp="+ response.gpid;
+  })
+},
     register: function () {
       if (app.username.length != 0 && app.password.length != 0) {
       $.post("/api/players", {

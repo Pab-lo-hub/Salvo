@@ -57,6 +57,14 @@ public class Player {
         return id;
     }
 
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
+    }
+
     public Set<Score> getScores() {
         return scores;
     }

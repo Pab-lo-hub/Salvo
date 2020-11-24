@@ -33,7 +33,7 @@ var app = new Vue({
             }
         },
         playersplaying: function () {
-            if (gp == app.gameView.gamePlayers[0].player.id) {
+            if (gp == app.gameView.gamePlayers[0].id) {
                 app.player1 = app.gameView.gamePlayers[0].player;
                 app.player2 = app.gameView.gamePlayers[1] != null ? app.gameView.gamePlayers[1].player : null;
             } else {
@@ -57,7 +57,7 @@ fetch(api)
         throw new Error(response.status);
     })
     .then(function (json) {
-        app.gameView = json;
+        app.gameView = json.gp;
         app.playersplaying();
         app.drawShips();
         app.drawSalvos();

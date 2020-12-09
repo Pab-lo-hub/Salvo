@@ -29,6 +29,9 @@ public class SalvoController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ShipRepository shipRepository;
+
     @RequestMapping("/games")
     public Map<String, Object> getGames(Authentication authentication) {
         Map<String, Object> DTO = new LinkedHashMap<String, Object>();
@@ -78,6 +81,34 @@ public class SalvoController {
             }
             }
         }
+
+    @RequestMapping(path = "/games/players/{gamePlayerId}/ships", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> placeShips(Authentication authentication, @PathVariable Long gamePlayerId, @RequestBody List<Ship> ships) {
+        if (authentication == null) {
+            return new ResponseEntity<>(makeMap("error", "You must have a user to play"), HttpStatus.FORBIDDEN);
+        }else {
+            Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+            Player player = playerRepository.findByUserName(authentication.getName());
+            if (gamePlayer.get().getPlayer().getId() == player.getId()) {
+                if (gamePlayer.get().getShips().size() > 0){
+                    return new ResponseEntity<>(makeMap("error", "ships have already been placed"), HttpStatus.FORBIDDEN);
+                }
+                else{
+                    if (ships.size() != 5){
+                        return new ResponseEntity<>(makeMap("error", "You must place 5 ships"), HttpStatus.FORBIDDEN);
+                    }
+                    else {
+                        ships.forEach(ship -> gamePlayer.get().addShip(ship));
+                        gamePlayerRepository.save(gamePlayer.get());
+                        return new ResponseEntity<>(makeMap("Ok", "Ships Placed"), HttpStatus.CREATED);
+                    }
+
+                }
+            } else {
+                return new ResponseEntity<>(makeMap("error", "unauthorized"), HttpStatus.FORBIDDEN);
+            }
+        }
+    }
 
 
     @RequestMapping("/game_view/{gamePlayerId}")

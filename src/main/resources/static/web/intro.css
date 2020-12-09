@@ -34,7 +34,7 @@ body{
 
 .content-wrap {
     position: relative;
-    top: 50%;
+    top: 68%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -61,7 +61,7 @@ body{
     text-align: center;
     color: blue;
     margin-top: 30px;
-    transition: all 1s ease 3s;
+    transition: all 1s ease 2s;
     font-size: 2em;
 }
 
@@ -78,5 +78,9 @@ body{
 
 .content-hidden .enter-button {
     opacity: 0;
-    transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -180px, 0);
+}
+
+#startbutton {
+    width: 350px;
 }

@@ -7,9 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
+
 import static java.util.stream.Collectors.toList;
 
 @Entity
@@ -27,7 +26,7 @@ public class GamePlayer {
     @JoinColumn(name="game_id")
     private Game game;
 
-    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Ship> ships;
 
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
@@ -67,6 +66,19 @@ public class GamePlayer {
         return id;
     }
 
+    public Set<Ship> getShips() {
+        return ships;
+    }
+
+    public void setShips(Set<Ship> ships) {
+        this.ships = ships;
+    }
+
+    public void addShip(Ship ship) {
+        ship.setGamePlayer(this);
+        ships.add(ship);
+    }
+
     public Set<Salvo> getSalvos() {
         return salvos;
     }
@@ -100,4 +112,5 @@ public class GamePlayer {
                         .collect(toList()));
         return dto;
     }
+
 }

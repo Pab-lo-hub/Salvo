@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <ol class="container">
+                    <ol class="container backgroundSquare">
                         <li v-for="(game, index) in games">
                             {{game.date | capitalize}} 
                             <template v-if="player != null && game.gamePlayers[0].player.id == player.id">
@@ -56,7 +56,7 @@
                     </ol>
                 </div>
                 <div class="col-6">
-                    <table class="table table-hover">
+                    <table class="table table-hover backgroundSquare">
                         <thead>
                             <tr>
                                 <td>Name</td>

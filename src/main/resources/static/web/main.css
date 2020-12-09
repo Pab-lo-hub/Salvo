@@ -16,10 +16,6 @@ th, td {
     text-align: center;
 }
 
-td:hover, th:hover { 
-    background:#af0000; color:#000; 
-}
-
 .barco {
     background-color: rgb(32, 28, 28);
 }
@@ -38,4 +34,12 @@ td:hover, th:hover {
 
 .btn {
     margin: 2px;
+}
+
+.shipsToPlace {
+    background-color: purple;
+}
+
+.hoverShipsToPlace {
+    background-color: rgb(255, 230, 0);
 }

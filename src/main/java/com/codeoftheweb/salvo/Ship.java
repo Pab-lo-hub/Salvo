@@ -29,8 +29,16 @@ public class Ship {
         this.gamePlayer = gamePlayer;
     };
 
+    public void setGamePlayer(GamePlayer gamePlayer) {
+        this.gamePlayer = gamePlayer;
+    }
+
     public long getId() {
         return id;
+    }
+
+    public List<String> getShipLocations() {
+        return shipLocations;
     }
 
     public String getShipType() {

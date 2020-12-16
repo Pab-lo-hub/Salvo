@@ -43,3 +43,11 @@ th, td {
 .hoverShipsToPlace {
     background-color: rgb(255, 230, 0);
 }
+
+.salvosToPlace {
+    background-color: rgb(180, 21, 21);
+}
+
+.hoverSalvosToPlace {
+    background-color: rgb(255, 230, 0);
+}

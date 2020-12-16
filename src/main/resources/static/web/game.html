@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,50 +11,63 @@
 </head>
 
 <body>
-    <h1>Salvo Game</h1>
     <div id="app">
         <p> Who´s Playing </p>
         <p>{{ player1 != null ? player1.name : "" }} (You) VS {{ player2 != null ? player2.name : "" }}</p>
 
-        <div id="shipsgrid">
-            <select id="ships" v-model="selectedShip">
-                <option v-for="shipType in shipTypes" v-bind:value="shipType"> {{shipType}} </option>
-            </select>
-            <button id="rotateship" v-on:click="rotateShip"> Switch orientation {{shipOrientation}} </button>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="shipsgrid">
+                        <select id="ships" v-model="selectedShip">
+                            <option v-for="shipType in shipTypes" v-bind:value="shipType"> {{shipType}} </option>
+                        </select>
+                        <button id="rotateship" v-on:click="rotateShip"> Switch orientation {{shipOrientation}}
+                        </button>
+                        <button id="placeShips" type="button" class="btn btn-primary" v-on:click="placeShips">Place
+                            Ships</button>
+                    </div>
 
-            <button id="placeShips" type="button" class="btn btn-primary" v-on:click="placeShips">Place Ships</button>
+                    <p>My ships grid</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td v-for="column in columns">{{ column }}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="row in rows">
+                                <td> {{ row }} </td>
+                                <td v-for="column in columns" v-bind:id="row + column"
+                                    v-on:click="sendCellId(row, column)" v-on:mouseover="hoverShips(row, column)"
+                                    v-on:mouseleave="cleanHover"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <p>Salvo grid</p>
+                    <button id="placeSalvos" type="button" class="btn btn-primary" v-on:click="shotSalvo">Shot Salvo</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td v-for="column in columns">{{ column }}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="row in rows">
+                                <td> {{ row }} </td>
+                                <td v-for="column in columns" v-bind:id="row + column + 'S'"
+                                    v-on:click="locateSalvos(row, column, 'S')"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-
-        <p>My ships grid</p>
-        <table>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td v-for="column in columns">{{ column }}</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="row in rows">
-                    <td> {{ row }} </td>
-                    <td v-for="column in columns" v-bind:id="row + column" v-on:click="sendCellId(row, column)" v-on:mouseover="hoverShips(row, column)" v-on:mouseleave="cleanHover"></td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Salvo grid</p>
-        <table>
-            <thead>
-                <tr>
-                    <td></td>
-                    <td v-for="column in columns">{{ column }}</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="row in rows">
-                    <td> {{ row }} </td>
-                    <td v-for="column in columns" v-bind:id="row + column + 'S'"></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>

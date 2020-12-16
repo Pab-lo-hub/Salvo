@@ -13,6 +13,10 @@ var app = new Vue({
         shipOrientation: "horizontal",
         selectedShip: "Aircraft Carrier",
         shipsToPost: [],
+        salvosToPost: {
+            turn: 0,
+            salvoLocations: []
+        },
         shipToCompare: null,
     },
     methods: {
@@ -61,7 +65,7 @@ var app = new Vue({
                     location.reload();
                 })
                 .fail(function () {
-                    alert("Failed to add ships. You must add 5 ships");
+                    alert("Failed to add ships");
                 })
         },
         rotateShip: function () {
@@ -213,13 +217,51 @@ var app = new Vue({
             } else if (selectedShip == "Patrol Boat") {
                 app.shipLength = 2;
             }
-        }
+        },
+
+        //SalvoShots
+        shotSalvo: function () {
+            if (app.salvosToPost.salvoLocations.length == 5) {
+                var playerSalvos = app.gameView.salvos.filter(salvo => salvo.playerId == app.player1.id);
+                app.salvosToPost.turn = playerSalvos.length + 1;
+                $.post({
+                        url: "/api/games/players/" + gp + "/salvos",
+                        data: JSON.stringify(app.salvosToPost),
+                        dataType: "text",
+                        contentType: "application/json"
+                    })
+                    .done(function () {
+                        alert("Salvos Placed");
+                        location.reload();
+                    })
+                    .fail(function () {
+                        alert("Failed to shot salvos");
+                    })
+            } else {
+                alert("You must place exactly 5 salvos");
+            }
+        },
+
+        locateSalvos: function (letter, number) {
+            console.log(letter, number, 'S');
+            if (app.salvosToPost.salvoLocations.length >= 5) {
+                alert("You can´t add more than 5 salvos")
+            } else {
+                if (document.getElementById(letter + number + 'S').classList != 'salvosToPlace') {
+                    document.getElementById(letter + number + 'S').classList.add('salvosToPlace');
+                    app.salvosToPost.salvoLocations.push(letter + number);
+                } else if (document.getElementById(letter + number + 'S').classList == 'salvosToPlace') {
+                    document.getElementById(letter + number + 'S').classList.remove('salvosToPlace');
+                    var locationToDelete = app.salvosToPost.salvoLocations.indexOf(letter + number);
+                    app.salvosToPost.salvoLocations.splice(locationToDelete, 1);
+                }
+            }
+        },
     }
 })
 
 var urlParams = new URLSearchParams(window.location.search);
 var gp = urlParams.get('gp');
-
 var api = "/api/game_view/" + gp;
 
 fetch(api)

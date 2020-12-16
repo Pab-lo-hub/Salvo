@@ -3,10 +3,7 @@ package com.codeoftheweb.salvo;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static java.util.stream.Collectors.toList;
@@ -29,7 +26,7 @@ public class GamePlayer {
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Ship> ships;
 
-    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Salvo> salvos;
 
     private LocalDateTime date;
@@ -110,7 +107,32 @@ public class GamePlayer {
                 .stream()
                         .map(Salvo::toDTO))
                         .collect(toList()));
+        dto.put("hits", this.getSalvos().stream().map(Salvo::hitDTO));
+        dto.put("sunk", this.getSalvos().stream().map(Salvo::sunkDTO));
+        Optional<GamePlayer> opponent = this.getOpponent();
+        if(opponent.isPresent()) {
+            dto.put("enemyHits", opponent.get().getSalvos().stream().map(Salvo::hitDTO));
+            dto.put("enemySunk", opponent.get().getSalvos().stream().map(Salvo::sunkDTO));
+        } else {
+            dto.put("enemyHits", new ArrayList<>());
+            dto.put("enemySunk", new ArrayList<>());
+        };
         return dto;
     }
 
+    public void setSalvos(Set<Salvo> salvos) {
+        this.salvos = salvos;
+    }
+
+    public void addSalvo(Salvo salvo) {
+            salvo.setGamePlayer(this);
+            salvos.add(salvo);
+        }
+
+    public Optional<GamePlayer> getOpponent(){
+        return this.getGame().getGamePlayers()
+                .stream()
+                .filter(gpopponent -> gpopponent.getId() != this.id)
+                .findFirst();
+    }
 }

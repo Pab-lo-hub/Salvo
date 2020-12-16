@@ -32,6 +32,9 @@ public class SalvoController {
     @Autowired
     private ShipRepository shipRepository;
 
+    @Autowired
+    private SalvoRepository salvoRepository;
+
     @RequestMapping("/games")
     public Map<String, Object> getGames(Authentication authentication) {
         Map<String, Object> DTO = new LinkedHashMap<String, Object>();
@@ -102,7 +105,6 @@ public class SalvoController {
                         gamePlayerRepository.save(gamePlayer.get());
                         return new ResponseEntity<>(makeMap("Ok", "Ships Placed"), HttpStatus.CREATED);
                     }
-
                 }
             } else {
                 return new ResponseEntity<>(makeMap("error", "unauthorized"), HttpStatus.FORBIDDEN);
@@ -110,6 +112,30 @@ public class SalvoController {
         }
     }
 
+    @RequestMapping("/games/players/{gamePlayerId}/salvos")
+    public ResponseEntity<Map<String, Object>> placeSalvos(Authentication authentication, @PathVariable Long gamePlayerId, @RequestBody Salvo salvo) {
+        if (authentication == null) {
+            return new ResponseEntity<>(makeMap("error", "You must have a user to play"), HttpStatus.FORBIDDEN);
+        } else {
+            Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+            Player player = playerRepository.findByUserName(authentication.getName());
+            if (gamePlayer.isPresent()) {
+                if (gamePlayer.get().getPlayer().getId() == player.getId()) {
+                    if (salvo.getTurn() == gamePlayer.get().getSalvos().size()+1) {
+                        gamePlayer.get().addSalvo(salvo);
+                        gamePlayerRepository.save(gamePlayer.get());
+                        return new ResponseEntity<>(makeMap("Ok", "Salvos Placed"), HttpStatus.CREATED);
+                    }else {
+                        return new ResponseEntity<>(makeMap("error", "Not the correct turn"), HttpStatus.FORBIDDEN);
+                    }
+                } else {
+                    return new ResponseEntity<>(makeMap("error", "unauthorized"), HttpStatus.FORBIDDEN);
+                }
+            }else {
+                return new ResponseEntity<>(makeMap("error", "Game player not found"), HttpStatus.FORBIDDEN);
+            }
+        }
+    }
 
     @RequestMapping("/game_view/{gamePlayerId}")
     public ResponseEntity <Map<String, Object>> getGamePlayer (@PathVariable Long gamePlayerId, Authentication authentication) {

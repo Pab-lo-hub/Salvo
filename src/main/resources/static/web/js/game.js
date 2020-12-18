@@ -11,18 +11,23 @@ var app = new Vue({
         shipTypes: ["Aircraft Carrier", "Battleship", "Submarine", "Destroyer", "Patrol Boat"],
         shipLength: null,
         shipOrientation: "horizontal",
-        selectedShip: "Aircraft Carrier",
+        selectedShip: null,
         shipsToPost: [],
         salvosToPost: {
             turn: 0,
             salvoLocations: []
         },
         shipToCompare: null,
+        gameStatus: null,
+        gameStatusDisplay: null,
     },
     methods: {
         drawShips: function () {
             for (var i = 0; i < app.gameView.ships.length; i++) {
                 for (var j = 0; j < app.gameView.ships[i].locations.length; j++) {
+                    if (app.gameView.ships[i].shipType == "submarine"){
+                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('barco');
+                    }
                     document.getElementById(app.gameView.ships[i].locations[j]).classList.add('barco');
                 }
             }
@@ -40,6 +45,22 @@ var app = new Vue({
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        drawMyHits: function () {
+            for (var m = 0; m < app.gameView.hits.length; m++) {
+                for (var n = 0; n < app.gameView.hits[m].hits.length; n++) {
+                        document.getElementById(app.gameView.hits[m].hits[n] + 'S').classList.add('sunkenship');
+                }
+            }
+        },
+        drawOpponentSunkShips: function () {
+            for (var q = 0; q < app.gameView.sunk.length; q++) {
+                for (var p = 0; p < app.gameView.sunk[q].sunk.length; p++) {
+                    for (var r = 0; r < app.gameView.sunk[q].sunk[p].locations.length; r++) {
+                            document.getElementById(app.gameView.sunk[q].sunk[p].locations[r] + 'S').classList.add('sunkopponentship');
                     }
                 }
             }
@@ -84,15 +105,12 @@ var app = new Vue({
             if ((app.shipsToPost.findIndex(ship => ship.shipType === app.selectedShip) != -1)) {
                 alert("You can´t add the same ship twice");
             } else {
-
                 console.log(letter, number);
                 console.log(app.selectedShip);
                 console.log(app.shipOrientation);
                 app.lengthOfShip(app.selectedShip);
-                console.log(app.shipLength);
-
+                console.log(app.shipLength)
                 var error = false;
-
                 if (app.shipOrientation == "horizontal") {
                     if ((app.shipLength + (number - 1)) > 10) {
                         error = true;
@@ -150,10 +168,8 @@ var app = new Vue({
                 }
             }
         },
-
         hoverShips: function (letter, number) {
             app.lengthOfShip(app.selectedShip);
-
             var error = false;
             if (app.shipOrientation == "horizontal") {
                 if ((app.shipLength + (number - 1)) > 10) {
@@ -197,14 +213,12 @@ var app = new Vue({
                 }
             }
         },
-
         cleanHover: function () {
             let cells = Array.from(document.getElementsByClassName('hoverShipsToPlace'));
             cells.forEach(element => {
                 element.classList.remove('hoverShipsToPlace');
             });
         },
-
         lengthOfShip: function (selectedShip) {
             if (selectedShip == "Aircraft Carrier") {
                 app.shipLength = 5;
@@ -216,6 +230,13 @@ var app = new Vue({
                 app.shipLength = 3;
             } else if (selectedShip == "Patrol Boat") {
                 app.shipLength = 2;
+            }
+        },
+        reloadpage: function (){
+            if (app.gameView.gameStatus == "WAIT") {
+                setTimeout(function() { location.reload(); }, 9000)
+            }else if (app.gameView.gameStatus == "WAIT_OPPONENT") {
+                setTimeout(function() { location.reload(); }, 12000)
             }
         },
 
@@ -246,7 +267,9 @@ var app = new Vue({
             console.log(letter, number, 'S');
             if (app.salvosToPost.salvoLocations.length >= 5) {
                 alert("You can´t add more than 5 salvos")
-            } else {
+            }else if (document.getElementById(letter + number + 'S').classList == 'shot') {
+                alert("You can´t place the salvo there")
+            }else {
                 if (document.getElementById(letter + number + 'S').classList != 'salvosToPlace') {
                     document.getElementById(letter + number + 'S').classList.add('salvosToPlace');
                     app.salvosToPost.salvoLocations.push(letter + number);
@@ -276,5 +299,9 @@ fetch(api)
         app.playersplaying();
         app.drawShips();
         app.drawSalvos();
+        app.drawMyHits();
+        app.drawOpponentSunkShips();
+        app.reloadpage();
+        app.gameStatus = app.gameView.gameStatus;
         console.log(json);
     })

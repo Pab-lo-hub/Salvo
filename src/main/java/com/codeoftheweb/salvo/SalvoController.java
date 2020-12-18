@@ -35,6 +35,9 @@ public class SalvoController {
     @Autowired
     private SalvoRepository salvoRepository;
 
+    @Autowired
+    private ScoreRepository scoreRepository;
+
     @RequestMapping("/games")
     public Map<String, Object> getGames(Authentication authentication) {
         Map<String, Object> DTO = new LinkedHashMap<String, Object>();
@@ -120,16 +123,36 @@ public class SalvoController {
             Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
             Player player = playerRepository.findByUserName(authentication.getName());
             if (gamePlayer.isPresent()) {
-                if (gamePlayer.get().getPlayer().getId() == player.getId()) {
-                    if (salvo.getTurn() == gamePlayer.get().getSalvos().size()+1) {
-                        gamePlayer.get().addSalvo(salvo);
-                        gamePlayerRepository.save(gamePlayer.get());
-                        return new ResponseEntity<>(makeMap("Ok", "Salvos Placed"), HttpStatus.CREATED);
-                    }else {
-                        return new ResponseEntity<>(makeMap("error", "Not the correct turn"), HttpStatus.FORBIDDEN);
+                if (gamePlayer.get().getGameStatus() == "FIRE") {
+                    if (gamePlayer.get().getPlayer().getId() == player.getId()) {
+                        if (salvo.getTurn() == gamePlayer.get().getSalvos().size() + 1) {
+                            gamePlayer.get().addSalvo(salvo);
+                            gamePlayerRepository.save(gamePlayer.get());
+                            if(gamePlayer.get().getGameStatus() == "LOST"){
+                                Score scorelose = new Score(gamePlayer.get().getPlayer(), gamePlayer.get().getGame(), 0, LocalDateTime.now());
+                                Score scoreopponentwin = new Score(gamePlayer.get().getOpponent().get().getPlayer(), gamePlayer.get().getGame(), 1, LocalDateTime.now());
+                                scoreRepository.save(scorelose);
+                                scoreRepository.save(scoreopponentwin);
+                            }else if(gamePlayer.get().getGameStatus() == "TIE"){
+                                Score scoretie = new Score(gamePlayer.get().getPlayer(), gamePlayer.get().getGame(), 0.5, LocalDateTime.now());
+                                Score scoreopponenttie = new Score(gamePlayer.get().getOpponent().get().getPlayer(), gamePlayer.get().getGame(), 0.5, LocalDateTime.now());
+                                scoreRepository.save(scoretie);
+                                scoreRepository.save(scoreopponenttie);
+                            }else if(gamePlayer.get().getGameStatus() == "WIN"){
+                                Score scorewin = new Score(gamePlayer.get().getPlayer(), gamePlayer.get().getGame(), 1, LocalDateTime.now());
+                                Score scoreopponentlose = new Score(gamePlayer.get().getOpponent().get().getPlayer(), gamePlayer.get().getGame(), 0, LocalDateTime.now());
+                                scoreRepository.save(scorewin);
+                                scoreRepository.save(scoreopponentlose);
+                            }
+                            return new ResponseEntity<>(makeMap("Ok", "Salvos Placed"), HttpStatus.CREATED);
+                        } else {
+                            return new ResponseEntity<>(makeMap("error", "Not the correct turn"), HttpStatus.FORBIDDEN);
+                        }
+                    } else {
+                        return new ResponseEntity<>(makeMap("error", "unauthorized"), HttpStatus.FORBIDDEN);
                     }
-                } else {
-                    return new ResponseEntity<>(makeMap("error", "unauthorized"), HttpStatus.FORBIDDEN);
+                }else {
+                    return new ResponseEntity<>(makeMap("error", "You can´t shoot now"), HttpStatus.FORBIDDEN);
                 }
             }else {
                 return new ResponseEntity<>(makeMap("error", "Game player not found"), HttpStatus.FORBIDDEN);

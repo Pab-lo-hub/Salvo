@@ -7,18 +7,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <title>Salvo Ready PLayer One</title>
     <title>Salvo Game</title>
 </head>
 
 <body>
     <div id="app">
-        <p> Who´s Playing </p>
-        <p>{{ player1 != null ? player1.name : "" }} (You) VS {{ player2 != null ? player2.name : "" }}</p>
-
+        <header class="container-fluid">
+            <div class="row">
+                <p class="text-light"> Who´s Playing: </p>
+                <p class="text-light">{{ player1 != null ? player1.name : "" }} (You) VS
+                    {{ player2 != null ? player2.name : "" }}</p>
+                <div class="col-md-3">
+                    <p v-show="gameView != null && gameStatus == 'PLACE_SHIPS'" class="text-white bg-dark text-center">
+                        Place your Ships </p>
+                    <p v-show="gameView != null && gameStatus == 'WAIT_OPPONENT'"
+                        class="text-white bg-dark text-center"> Wait for your opponent </p>
+                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-dark text-center"> Select
+                        and shot your salvos </p>
+                    <p v-show="gameView != null && gameStatus == 'WAIT'" class="text-white bg-dark text-center"> Wait
+                    </p>
+                    <p v-show="gameView != null && gameStatus == 'LOST'" class="text-white bg-dark text-center"> Lost
+                    </p>
+                    <p v-show="gameView != null && gameStatus == 'WIN'" class="text-white bg-dark text-center"> Win </p>
+                    <p v-show="gameView != null && gameStatus == 'TIE'" class="text-white bg-dark text-center"> Tie </p>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" href="games.html">Home</button>
+                </div>
+            </div>
+        </header>
         <div class="container">
+
             <div class="row">
                 <div class="col-md-6">
-                    <div id="shipsgrid">
+                    <p class="text-light">My ships grid</p>
+                    <div id="shipsgrid" v-show="gameStatus == 'PLACE_SHIPS'">
                         <select id="ships" v-model="selectedShip">
                             <option v-for="shipType in shipTypes" v-bind:value="shipType"> {{shipType}} </option>
                         </select>
@@ -27,8 +52,6 @@
                         <button id="placeShips" type="button" class="btn btn-primary" v-on:click="placeShips">Place
                             Ships</button>
                     </div>
-
-                    <p>My ships grid</p>
                     <table>
                         <thead>
                             <tr>
@@ -48,8 +71,15 @@
                 </div>
 
                 <div class="col-md-6">
-                    <p>Salvo grid</p>
-                    <button id="placeSalvos" type="button" class="btn btn-primary" v-on:click="shotSalvo">Shot Salvo</button>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <p class="text-dark">Salvo grid</p>
+                            <div class="col-md-6 d-flex justify-content-end">
+                                <button id="placeSalvos" type="button" class="btn btn-primary" v-on:click="shotSalvo"
+                                    v-show="gameStatus == 'FIRE'">Shot Salvo</button>
+                            </div>
+                        </div>
+                    </div>
                     <table>
                         <thead>
                             <tr>

@@ -1,29 +1,42 @@
+@font-face {
+    font-family: "myFont";
+    src: url("font/ReadyPlayerOne-rwzx.ttf");
+  }
+
+html {
+    font-family: "myFont"; 
+    font-family: 'Orbitron', sans-serif;
+  }
+
+header{
+    margin-bottom: 20px;
+    font-family: 'Orbitron';
+}
+
 button {
     margin: 2px;
 }
 
-body {
-    background-color: rgb(0, 0, 0);
-    background-repeat: no-repeat; 
-    background-size: cover;
-}
-
-/*
-@-webkit-keyframes changeBg
+@keyframes changeBg
 {
-   0%   {background-image: url("images/3615dc9d-e947-4675-bf25-16e8e4c7d27e.png");}
-   25%  {background-image: url("images/38738827415_a14b8bdec5_o.jpg");}
-   50%  {background-image: url("images/38738828145_c83c22209a_o.jpg");}
-   100% {background-image: url("images/adam-walker-sizzlereel-rpo-00789.jpg");}
+   0% {background-image: url("images/games1.png");}
+   20% {background-image: url("images/games2.png");}
+   40% {background-image: url("images/games3.png");}
+   60% {background-image: url("images/games4.png");}
+   80% {background-image: url("images/games5.png");}
+   100% {background-image: url("images/games8.png");}
 }
  
 body
 {
-   -webkit-animation: changeBg 20s infinite;
+    background-color: rgb(0, 0, 0);
+    background-repeat: no-repeat; 
+    background-size: cover;
+    animation: changeBg 90s linear infinite;
+    font-family: 'Orbitron';
 }
-*/
 
 .backgroundSquare {
-    background-image: linear-gradient(rgba(170, 168, 168, 0.6), rgba(233, 231, 231, 0.6));
+    background-image: linear-gradient(rgba(214, 214, 214, 0.6), rgba(233, 231, 231, 0.815));
     color: black;
 }

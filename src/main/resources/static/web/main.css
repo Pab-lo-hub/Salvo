@@ -1,3 +1,21 @@
+@font-face {
+    font-family: "myFont";
+    src: url("font/ReadyPlayerOne-rwzx.ttf");
+  }
+
+html {
+    font-family: "myFont"; 
+    font-family: 'Orbitron', sans-serif;
+  }
+
+body {
+    background-image: url("images/game1.jpg");
+    background-color: rgb(0, 0, 0);
+    background-repeat: no-repeat; 
+    background-size: cover;
+    font-family: 'Orbitron', sans-serif;
+}
+
 table, th, td {
     border: 1px solid rgb(81, 90, 170);
     border-collapse: collapse;
@@ -16,12 +34,18 @@ th, td {
     text-align: center;
 }
 
+header{
+    border: 30px;
+}
+
 .barco {
     background-color: rgb(32, 28, 28);
 }
 
 .shot {
-    background-color: rgb(236, 0, 0);
+    background-image: url("images/water4.jpg");
+    background-repeat: no-repeat;
+    border-color: rgba(36, 33, 192, 0.767);
 }
 
 .hitonaship{
@@ -29,7 +53,14 @@ th, td {
 }
 
 .sunkenship {
-    background-color: rgb(255, 0, 0);
+    background-image: url("images/hit5.jpg");
+    background-repeat: no-repeat;
+    border-color: rgba(255, 68, 0, 0.945);
+}
+
+.sunkopponentship{
+    background-color: rgb(138, 138, 138, 0.3);
+    border-color: rgb(216, 9, 9);
 }
 
 .btn {

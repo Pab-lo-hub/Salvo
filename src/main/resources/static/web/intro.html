@@ -19,8 +19,7 @@
         -->
     </div>
     <img id="backgroundimage" src="https://hjone.carrd.co/assets/images/image01.gif?v16837795414351)">
-
-
+    <img id="logointro" src="images/logo2.jpg" width="200px">
     <div class="welcome-section content-hidden">
         <div class="content-wrap">
             <a href="games.html" class="enter-button">
@@ -28,6 +27,15 @@
             </a>
         </div>
     </div>
+    <!--
+    <div class="welcome-section2 content-hidden2">
+        <div class="content-wrap2">
+            <a href="games.html" class="enter-logo">
+            <img id="idlogo" class="enter-logo" src="images/logo2.jpg" width="200px">
+            </a>
+        </div>
+    </div>
+    -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -36,18 +44,34 @@
         crossorigin="anonymous"></script>
 </body>
 <script type="text/javascript">
-$(function(){
-    var welcomeSection = $('.welcome-section'),
-    enterButton = welcomeSection.find('.enter.button');
+    $(function () {
+        var welcomeSection = $('.welcome-section'),
+            enterButton = welcomeSection.find('.enter.button');
 
-    setTimeout(function(){
-        welcomeSection.removeClass('content-hidden');
-        },800);
+        setTimeout(function () {
+            welcomeSection.removeClass('content-hidden');
+        }, 800);
 
-    enterButton.on('click', function(e){
-        e.preventDefault();
-        welcomeSection.addClass('content-hidden').fadeOut();
+        enterButton.on('click', function (e) {
+            e.preventDefault();
+            welcomeSection.addClass('content-hidden').fadeOut();
+        });
     });
+    /*
+    $(function () {
+        var welcomeSection2 = $('.welcome-section2'),
+            enterButton = welcomeSection2.find('.enter.button2');
+
+        setTimeout(function () {
+            welcomeSection2.removeClass('content-hidden2');
+        }, 800);
+
+        enterButton2.on('click', function (f) {
+            f.preventDefault();
+            welcomeSection2.addClass('content-hidden2').fadeOut();
+        });
     });
+    */
 </script>
+
 </html>

@@ -117,6 +117,7 @@ public class GamePlayer {
             dto.put("enemyHits", new ArrayList<>());
             dto.put("enemySunk", new ArrayList<>());
         };
+        dto.put("gameStatus", this.getGameStatus());
         return dto;
     }
 
@@ -134,5 +135,48 @@ public class GamePlayer {
                 .stream()
                 .filter(gpopponent -> gpopponent.getId() != this.id)
                 .findFirst();
+    }
+
+    public String getGameStatus(){
+        Optional<GamePlayer> opponent = this.getOpponent();
+        Optional<Salvo> lastSalvo = this.salvos.stream().filter(salvo -> salvo.getTurn() == this.salvos.size()).findFirst();
+        if(this.ships.isEmpty()){
+            return "PLACE_SHIPS";
+        }else if(opponent.isEmpty()){
+            return "WAIT_OPPONENT";
+        }else{
+            Optional<Salvo> lastSalvoOpponent = opponent.get().salvos.stream().filter(salvo -> salvo.getTurn() == opponent.get().salvos.size()).findFirst();
+            int turno = 0;
+            int sunks = 0;
+            int turnoOpponet = 0;
+            int sunksOpponent = 0;
+            if(lastSalvo.isPresent()){
+                turno = lastSalvo.get().getTurn();
+                sunks = lastSalvo.get().getSunkShips().size();
+            };
+            if(lastSalvoOpponent.isPresent()) {
+                turnoOpponet = lastSalvoOpponent.get().getTurn();
+                sunksOpponent = lastSalvoOpponent.get().getSunkShips().size();
+            };
+            if(turno < turnoOpponet){
+                return "FIRE";
+            }else if(turno > turnoOpponet){
+                return "WAIT";
+            }else {
+                if(sunks < 5 && sunksOpponent == 5){
+                    return "LOST";
+                }else if (sunks == 5  && sunksOpponent < 5){
+                    return "WIN";
+                }else if(sunks == 5 && sunksOpponent == 5){
+                    return "TIE";
+                }else{
+                    if(this.id < opponent.get().getId()){
+                        return "FIRE";
+                    }else{
+                        return "WAIT";
+                    }
+                }
+            }
+        }
     }
 }

@@ -52,17 +52,6 @@ header{
     background-color: rgb(78, 5, 78);
 }
 
-.sunkenship {
-    background-image: url("images/hit5.jpg");
-    background-repeat: no-repeat;
-    border-color: rgba(255, 68, 0, 0.945);
-}
-
-.sunkopponentship{
-    background-color: rgb(138, 138, 138, 0.3);
-    border-color: rgb(216, 9, 9);
-}
-
 .Aircraft {
     background-image: url("images/aircraft2.jpg");
     background-repeat: no-repeat;
@@ -86,6 +75,18 @@ header{
 .Patrolboat {
     background-image: url("images/patrolboat.jpg");
     background-repeat: no-repeat;
+}
+
+.sunkenship {
+    background-image: url("images/hit5.jpg");
+    background-repeat: no-repeat;
+    border-color: rgba(255, 68, 0, 0.945);
+}
+
+.sunkopponentship{
+    background-image: url("images/sunkenship.jpg");
+    background-color: rgb(138, 138, 138, 0.3);
+    border-color: rgb(0, 0, 0);
 }
 
 .btn {

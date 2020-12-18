@@ -63,6 +63,31 @@ header{
     border-color: rgb(216, 9, 9);
 }
 
+.Aircraft {
+    background-image: url("images/aircraft2.jpg");
+    background-repeat: no-repeat;
+}
+
+.Battleship {
+    background-image: url("images/Battleship.jpg");
+    background-repeat: no-repeat;
+}
+
+.Submarine {
+    background-image: url("images/submarine.jpg");
+    background-repeat: no-repeat;
+}
+
+.Destroyer {
+    background-image: url("images/destroyer.jpg");
+    background-repeat: no-repeat;
+}
+
+.Patrolboat {
+    background-image: url("images/patrolboat.jpg");
+    background-repeat: no-repeat;
+}
+
 .btn {
     margin: 2px;
 }

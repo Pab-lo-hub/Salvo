@@ -17,21 +17,21 @@
         <header class="container-fluid">
             <div class="row">
                 <p class="text-light"> Who´s Playing: </p>
-                <p class="text-light">{{ player1 != null ? player1.name : "" }} (You) VS
+                <p class="p-3 mb-2 bg-dark text-white">{{ player1 != null ? player1.name : "" }} (You) VS
                     {{ player2 != null ? player2.name : "" }}</p>
                 <div class="col-md-3">
-                    <p v-show="gameView != null && gameStatus == 'PLACE_SHIPS'" class="text-white bg-dark text-center">
+                    <p v-show="gameView != null && gameStatus == 'PLACE_SHIPS'" class="text-white bg-danger text-center">
                         Place your Ships </p>
                     <p v-show="gameView != null && gameStatus == 'WAIT_OPPONENT'"
-                        class="text-white bg-dark text-center"> Wait for your opponent </p>
-                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-dark text-center"> Select
+                        class="text-white bg-danger text-center"> Wait for your opponent </p>
+                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-danger text-center"> Select
                         and shot your salvos </p>
-                    <p v-show="gameView != null && gameStatus == 'WAIT'" class="text-white bg-dark text-center"> Wait
+                    <p v-show="gameView != null && gameStatus == 'WAIT'" class="text-white bg-danger text-center"> Wait
                     </p>
-                    <p v-show="gameView != null && gameStatus == 'LOST'" class="text-white bg-dark text-center"> Lost
+                    <p v-show="gameView != null && gameStatus == 'LOST'" class="text-white bg-danger text-center"> Lost
                     </p>
-                    <p v-show="gameView != null && gameStatus == 'WIN'" class="text-white bg-dark text-center"> Win </p>
-                    <p v-show="gameView != null && gameStatus == 'TIE'" class="text-white bg-dark text-center"> Tie </p>
+                    <p v-show="gameView != null && gameStatus == 'WIN'" class="text-white bg-danger text-center"> Win </p>
+                    <p v-show="gameView != null && gameStatus == 'TIE'" class="text-white bg-danger text-center"> Tie </p>
                 </div>
                 <div class="col-md-3">
                     <button type="button" class="btn btn-primary" href="games.html">Home</button>
@@ -105,7 +105,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous"></script>
-    <script src="JS/game.js"></script>
+    <script src="js/game.js"></script>
 </body>
 
 </html>

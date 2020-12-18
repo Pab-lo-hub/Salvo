@@ -25,9 +25,22 @@ var app = new Vue({
         drawShips: function () {
             for (var i = 0; i < app.gameView.ships.length; i++) {
                 for (var j = 0; j < app.gameView.ships[i].locations.length; j++) {
-                    if (app.gameView.ships[i].shipType == "submarine"){
-                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('barco');
+                    if (app.gameView.ships[i].type == "Aircraft Carrier"){
+                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('Aircraft');
                     }
+                    if (app.gameView.ships[i].type == "Battleship"){
+                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('Battleship');
+                    }
+                    if (app.gameView.ships[i].type == "Submarine"){
+                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('Submarine');
+                    }
+                    if (app.gameView.ships[i].type == "Destroyer"){
+                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('Destroyer');
+                    }
+                    if (app.gameView.ships[i].type == "Patrol Boat"){
+                        document.getElementById(app.gameView.ships[i].locations[j]).classList.add('Patrolboat');
+                    }
+                    
                     document.getElementById(app.gameView.ships[i].locations[j]).classList.add('barco');
                 }
             }

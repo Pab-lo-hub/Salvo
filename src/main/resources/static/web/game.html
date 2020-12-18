@@ -16,6 +16,9 @@
     <div id="app">
         <header class="container-fluid">
             <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" href="games.html">Home</button>
+                </div>
                 <p class="text-light"> Who´s Playing: </p>
                 <p class="p-3 mb-2 bg-dark text-white">{{ player1 != null ? player1.name : "" }} (You) VS
                     {{ player2 != null ? player2.name : "" }}</p>
@@ -33,9 +36,7 @@
                     <p v-show="gameView != null && gameStatus == 'WIN'" class="text-white bg-danger text-center"> Win </p>
                     <p v-show="gameView != null && gameStatus == 'TIE'" class="text-white bg-danger text-center"> Tie </p>
                 </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-primary" href="games.html">Home</button>
-                </div>
+                
             </div>
         </header>
         <div class="container">

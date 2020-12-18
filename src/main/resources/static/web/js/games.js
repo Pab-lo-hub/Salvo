@@ -150,7 +150,7 @@ var app = new Vue({
   },
 });
 
-fetch("http://localhost:8080/api/games", {
+fetch("/api/games", {
     method: 'GET',
     headers: {}
   })

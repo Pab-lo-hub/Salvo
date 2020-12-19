@@ -20,15 +20,14 @@
                     <button class="btn btn-primary" onclick="document.location='games.html'">Home</button>
                 </div>
                 <p class="text-light"> Who´s Playing: </p>
-                <p class="p-3 mb-2 bg-dark text-white">{{ player1 != null ? player1.name : "" }} (You) VS
+                <p class="bg-dark text-white">{{ player1 != null ? player1.name : "" }} (You) VS
                     {{ player2 != null ? player2.name : "" }}</p>
                 <div class="col-md-3">
                     <p v-show="gameView != null && gameStatus == 'PLACE_SHIPS'" class="text-white bg-danger text-center">
                         Place your Ships </p>
                     <p v-show="gameView != null && gameStatus == 'WAIT_OPPONENT'"
                         class="text-white bg-danger text-center"> Wait for your opponent </p>
-                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-danger text-center"> Select
-                        and shot your salvos </p>
+                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-danger text-center"> Select 5 places and shot</p>
                     <p v-show="gameView != null && gameStatus == 'WAIT'" class="text-white bg-danger text-center"> Wait
                     </p>
                     <p v-show="gameView != null && gameStatus == 'LOST'" class="text-white bg-danger text-center"> Lost
@@ -48,7 +47,7 @@
                         <select id="ships" v-model="selectedShip">
                             <option v-for="shipType in shipTypes" v-bind:value="shipType"> {{shipType}} </option>
                         </select>
-                        <button id="rotateship" v-on:click="rotateShip"> Switch orientation {{shipOrientation}}
+                        <button id="rotateship" v-on:click="rotateShip"> Switch: {{shipOrientation}}
                         </button>
                         <button id="placeShips" type="button" class="btn btn-primary" v-on:click="placeShips">Place
                             Ships</button>

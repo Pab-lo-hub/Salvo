@@ -89,6 +89,12 @@ header{
     border-color: rgb(0, 0, 0);
 }
 
+.iwasshot{
+    background-image: url("images/iwasshot.jpg");
+    background-color: rgb(138, 138, 138, 0.3);
+    border-color: rgb(0, 0, 0);
+}
+
 .btn {
     margin: 2px;
 }

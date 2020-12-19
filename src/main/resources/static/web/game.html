@@ -23,19 +23,21 @@
                 <p class="bg-dark text-white">{{ player1 != null ? player1.name : "" }} (You) VS
                     {{ player2 != null ? player2.name : "" }}</p>
                 <div class="col-md-3">
-                    <p v-show="gameView != null && gameStatus == 'PLACE_SHIPS'" class="text-white bg-danger text-center">
-                        Place your Ships </p>
+                    <p v-show="gameView != null && gameStatus == 'PLACE_SHIPS'"
+                        class="text-white bg-danger text-center"> Place your Ships </p>
                     <p v-show="gameView != null && gameStatus == 'WAIT_OPPONENT'"
                         class="text-white bg-danger text-center"> Wait for your opponent </p>
-                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-danger text-center"> Select 5 places and shot</p>
+                    <p v-show="gameView != null && gameStatus == 'FIRE'" class="text-white bg-danger text-center">
+                        Select 5 places and shot</p>
                     <p v-show="gameView != null && gameStatus == 'WAIT'" class="text-white bg-danger text-center"> Wait
                     </p>
                     <p v-show="gameView != null && gameStatus == 'LOST'" class="text-white bg-danger text-center"> Lost
                     </p>
-                    <p v-show="gameView != null && gameStatus == 'WIN'" class="text-white bg-danger text-center"> Win </p>
-                    <p v-show="gameView != null && gameStatus == 'TIE'" class="text-white bg-danger text-center"> Tie </p>
+                    <p v-show="gameView != null && gameStatus == 'WIN'" class="text-white bg-danger text-center"> Win
+                    </p>
+                    <p v-show="gameView != null && gameStatus == 'TIE'" class="text-white bg-danger text-center"> Tie
+                    </p>
                 </div>
-                
             </div>
         </header>
         <div class="container">

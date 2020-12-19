@@ -39,8 +39,7 @@ var app = new Vue({
                     }
                     if (app.gameView.ships[i].type == "Patrol Boat"){
                         document.getElementById(app.gameView.ships[i].locations[j]).classList.add('Patrolboat');
-                    }
-                    
+                    }         
                     document.getElementById(app.gameView.ships[i].locations[j]).classList.add('barco');
                 }
             }
@@ -54,7 +53,9 @@ var app = new Vue({
                         for (var i = 0; i < app.gameView.ships.length; i++) {
                             for (var j = 0; j < app.gameView.ships[i].locations.length; j++) {
                                 if (app.gameView.ships[i].locations[j] == app.gameView.salvos[k].salvolocations[h]) {
-                                    document.getElementById(app.gameView.salvos[k].salvolocations[h]).classList.add('sunkenship');
+                                    document.getElementById(app.gameView.salvos[k].salvolocations[h]).classList.add('iwasshot');
+                                }else {
+                                    document.getElementById(app.gameView.salvos[k].salvolocations[h]).classList.add('shot');
                                 }
                             }
                         }
